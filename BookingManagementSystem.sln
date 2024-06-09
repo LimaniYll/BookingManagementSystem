@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingManagementSystem", "BookingManagementSystem\BookingManagementSystem.csproj", "{81607ED3-542C-4B64-8DCC-BBBF9781B5F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingManagementSystem.Tests", "BookingManagementSystem.Tests\BookingManagementSystem.Tests.csproj", "{27DC1CFE-BF0C-4493-BFFA-C6A205BD82CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81607ED3-542C-4B64-8DCC-BBBF9781B5F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81607ED3-542C-4B64-8DCC-BBBF9781B5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81607ED3-542C-4B64-8DCC-BBBF9781B5F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81607ED3-542C-4B64-8DCC-BBBF9781B5F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27DC1CFE-BF0C-4493-BFFA-C6A205BD82CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27DC1CFE-BF0C-4493-BFFA-C6A205BD82CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27DC1CFE-BF0C-4493-BFFA-C6A205BD82CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27DC1CFE-BF0C-4493-BFFA-C6A205BD82CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3FB12A48-AA87-44C4-8885-79352BFE202C}
+	EndGlobalSection
+EndGlobal
