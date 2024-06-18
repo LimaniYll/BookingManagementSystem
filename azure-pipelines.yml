@@ -4,52 +4,55 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- master
+  branches:
+    include:
+      - master
 
 pool:
-  vmImage: 'windows-latest'
+  name: Default 
 
 variables:
-  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  solution: '**/BookingManagementSystem.sln'
-  project: '**/BookingManagementSystem.csproj'
+  apiProject: 'BookingManagementSystem' 
 
 steps:
-- task: NuGetToolInstaller@1
-  name: 'NuGetToolInstaller'
-  displayName: 'NuGet tool installer'
-
-- task: NuGetCommand@2
-  name: 'NuGetRestore'
-  displayName: 'NuGet restore packages'
+- task: UseDotNet@2
   inputs:
-    command: 'restore'
-    restoreSolution: '$(solution)'
-    feedsToUse: 'select'
+    packageType: 'sdk'
+    version: '7.0.0' 
+    installationPath: $(Agent.ToolsDirectory)/dotnet
 
-- task: DotNetCoreCLI@2
-  name: 'Tests'
+- script: |
+    echo "##vso[task.setvariable variable=dotnet-install-dir]$(Agent.ToolsDirectory)/dotnet"
+    export PATH=$(dotnet-install-dir):$PATH
+  displayName: 'Set .NET Core SDK Path'
+
+- script: |
+    dotnet restore
+  displayName: 'Restore dependencies'
+
+- script: |
+    dotnet build --configuration $(buildConfiguration) --no-restore
+  displayName: 'Build'
+
+- script: |
+    dotnet test --configuration $(buildConfiguration) --no-restore --collect:"XPlat Code Coverage"
   displayName: 'Run tests'
+
+- task: PublishCodeCoverageResults@1
   inputs:
-    command: 'test'
-    projects: '$(solution)'
-    arguments: '--configuration $(buildConfiguration)'
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*.cobertura.xml'
 
 - task: DotNetCoreCLI@2
-  name: 'Publish'
-  displayName: 'Publish'
   inputs:
     command: 'publish'
-    publishWebProjects: false
-    projects: '$(project)'
-    arguments: '--configuration $(BuildConfiguration) --output $(BuildArtifactStagingDirectory)'
-    zipAfterPublish: false
-    
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
 - task: PublishBuildArtifacts@1
-  name: 'PublishBuildArtifacts'
-  displayName: 'Publish build artifacts'
   inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'AzureProject'
-      publishLocation: 'Container'
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'drop'
+    publishLocation: 'Container'
